@@ -1,18 +1,30 @@
 {
-  "buildCommand": "echo 'No build needed'",
-  "outputDirectory": ".",
-  "installCommand": "echo 'No install needed'",
+  "functions": {
+    "index.html": {
+      "memory": 128
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
           "key": "X-Frame-Options",
-          "value": "ALLOWALL"
+          "value": "SAMEORIGIN"
         },
         {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors *;"
+          "value": "frame-ancestors *"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
         }
       ]
     }
