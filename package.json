@@ -1,0 +1,13 @@
+{
+  "name": "notion-pet-calculator",
+  "version": "1.0.0",
+  "description": "반려동물 가계부 계산기",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["calculator", "pet", "notion"],
+  "author": "Your Name",
+  "license": "MIT"
+}
