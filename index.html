@@ -16,7 +16,17 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <meta name="theme-color" content="#fffafb">
-    <!-- Cache buster: v1.1 -->
+    <!-- Cache buster: v1.2 - Force Notion refresh -->
+    <script>
+        // Force cache invalidation
+        if (window.parent !== window) {
+            // Running in iframe (Notion)
+            document.addEventListener('DOMContentLoaded', function() {
+                const timestamp = new Date().getTime();
+                console.log('Widget loaded at:', timestamp);
+            });
+        }
+    </script>
 
     <style>
         * {
