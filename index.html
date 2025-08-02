@@ -309,13 +309,26 @@
             if (shouldResetDisplay) {
                 currentValue = '';
                 shouldResetDisplay = false;
-                expression = ''; // 새로운 계산 시작 시 이전 계산 과정 지우기
+                if (!operator) {
+                    expression = ''; // 새로운 계산 시작 시에만 이전 계산 과정 지우기
+                }
             }
 
             if (currentValue === '0') {
                 currentValue = num;
             } else {
                 currentValue += num;
+            }
+
+            // 연산자가 있으면 전체 수식을 하단에 표시
+            if (operator && previousValue) {
+                const operatorSymbols = {
+                    '+': '+',
+                    '-': '-',
+                    '*': '×',
+                    '/': '÷'
+                };
+                expression = `${previousValue}${operatorSymbols[operator]}${currentValue}`;
             }
 
             updateDisplay();
@@ -349,7 +362,8 @@
                 '/': '÷'
             };
 
-            expression = `${previousValue} ${operatorSymbols[op]}`;
+            // 현재까지의 수식을 하단에 표시
+            expression = `${previousValue}${operatorSymbols[op]}`;
             updateDisplay();
         }
 
