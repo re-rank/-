@@ -469,21 +469,23 @@
             const calculator = document.querySelector('.calculator');
             const width = calculator.offsetWidth;
             const height = calculator.offsetHeight;
-            const minDimension = Math.min(width, height);
             
+            // 가로 크기를 주 기준으로 하되, 세로가 너무 작으면 세로 기준 적용
+            const referenceDimension = height < width * 0.6 ? height : width;
+
             // 기본 크기 대비 비율 계산 (400px 기준, 200px일 때 0.8)
-            // 공식: 0.8 + (minDimension - 200) * 0.2 / 200
-            const baseScale = 0.8 + (minDimension - 200) * 0.2 / 200;
+            // 공식: 0.8 + (referenceDimension - 200) * 0.2 / 200
+            const baseScale = 0.8 + (referenceDimension - 200) * 0.2 / 200;
             const scale = Math.max(0.6, Math.min(2.5, baseScale));
-            
+
             // 폰트 크기 동적 조정
             const displayValue = document.querySelector('.display-value');
             const displayExpression = document.querySelector('.display-expression');
             const buttons = document.querySelectorAll('.btn');
-            
+
             if (displayValue) displayValue.style.fontSize = `${8 * scale}rem`;
             if (displayExpression) displayExpression.style.fontSize = `${4 * scale}rem`;
-            
+
             buttons.forEach(btn => {
                 if (btn.classList.contains('btn-plus')) {
                     btn.style.fontSize = `${5.5 * scale}rem`;
@@ -498,7 +500,7 @@
         // 초기 로드 시 및 리사이즈 시 폰트 크기 조정
         window.addEventListener('load', adjustFontSize);
         window.addEventListener('resize', adjustFontSize);
-        
+
         // iframe 환경에서 주기적으로 크기 체크
         if (window.parent !== window) {
             setInterval(adjustFontSize, 1000);
