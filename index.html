@@ -469,11 +469,16 @@
             const calculator = document.querySelector('.calculator');
             const width = calculator.offsetWidth;
             const height = calculator.offsetHeight;
-            
+
             // 가로 크기만을 기준으로 스케일 계산 (직사각형에서도 일관성 유지)
             // 400px 기준, 200px일 때 0.8
             const baseScale = 0.8 + (width - 200) * 0.2 / 200;
-            const scale = Math.max(0.6, Math.min(2.5, baseScale));
+            const scale = Math.max(0.8, Math.min(2.5, baseScale));
+            
+            // 디버깅용 로그 (iframe 환경에서만)
+            if (window.parent !== window) {
+                console.log(`Widget size: ${width}x${height}, scale: ${scale.toFixed(2)}`);
+            }
 
             // 폰트 크기 동적 조정
             const displayValue = document.querySelector('.display-value');
