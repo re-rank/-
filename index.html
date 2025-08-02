@@ -73,7 +73,7 @@
         }
 
         .display-value {
-            font-size: 8rem;
+            font-size: 10rem;
             color: black;
             font-weight: 600;
             overflow: hidden;
@@ -84,7 +84,7 @@
         }
 
         .display-expression {
-            font-size: 4rem;
+            font-size: 5rem;
             color: black;
             font-weight: 400;
             font-family: 'Pretendard', sans-serif;
@@ -102,7 +102,7 @@
         .btn {
             border: none;
             border-radius: 10px;
-            font-size: 4rem;
+            font-size: 5rem;
             color: black;
             cursor: pointer;
             transition: all 0.1s ease;
@@ -196,11 +196,11 @@
         }
 
         .btn-multiply {
-            font-size: 5rem;
+            font-size: 6rem;
         }
 
         .btn-plus {
-            font-size: 5.5rem;
+            font-size: 6.5rem;
         }
 
         /* Responsive adjustments */
@@ -470,17 +470,19 @@
             const width = calculator.offsetWidth;
             const height = calculator.offsetHeight;
 
-            // 가로 크기만을 기준으로 스케일 계산 (더 관대한 공식 적용)
-            // 300px 기준, 150px일 때도 1.0 유지
+            // 더 강력한 스케일 계산 - 절대 작아지지 않도록
             let scale;
-            if (width >= 300) {
-                // 300px 이상: 정상 스케일링
-                scale = 1.0 + (width - 300) * 0.3 / 300;
+            if (width >= 400) {
+                // 400px 이상: 확대
+                scale = 1.2 + (width - 400) * 0.5 / 400;
+            } else if (width >= 200) {
+                // 200-400px: 최소 1.2 유지
+                scale = 1.2;
             } else {
-                // 300px 미만: 최소 1.0 유지 (작아져도 폰트 크기 유지)
-                scale = 1.0;
+                // 200px 미만: 더 큰 스케일로 보상
+                scale = 1.5;
             }
-            scale = Math.max(1.0, Math.min(2.5, scale));
+            scale = Math.max(1.2, Math.min(3.0, scale));
 
             // 디버깅용 로그 (iframe 환경에서만)
             if (window.parent !== window) {
@@ -492,16 +494,16 @@
             const displayExpression = document.querySelector('.display-expression');
             const buttons = document.querySelectorAll('.btn');
 
-            if (displayValue) displayValue.style.fontSize = `${8 * scale}rem`;
-            if (displayExpression) displayExpression.style.fontSize = `${4 * scale}rem`;
+            if (displayValue) displayValue.style.fontSize = `${10 * scale}rem`;
+            if (displayExpression) displayExpression.style.fontSize = `${5 * scale}rem`;
 
             buttons.forEach(btn => {
                 if (btn.classList.contains('btn-plus')) {
-                    btn.style.fontSize = `${5.5 * scale}rem`;
+                    btn.style.fontSize = `${6.5 * scale}rem`;
                 } else if (btn.classList.contains('btn-multiply')) {
-                    btn.style.fontSize = `${5 * scale}rem`;
+                    btn.style.fontSize = `${6 * scale}rem`;
                 } else {
-                    btn.style.fontSize = `${4 * scale}rem`;
+                    btn.style.fontSize = `${5 * scale}rem`;
                 }
             });
         }
