@@ -471,8 +471,10 @@
             const height = calculator.offsetHeight;
             const minDimension = Math.min(width, height);
             
-            // 기본 크기 대비 비율 계산 (400px 기준)
-            const scale = Math.max(0.5, Math.min(2, minDimension / 400));
+            // 기본 크기 대비 비율 계산 (400px 기준, 200px일 때 0.8)
+            // 공식: 0.8 + (minDimension - 200) * 0.2 / 200
+            const baseScale = 0.8 + (minDimension - 200) * 0.2 / 200;
+            const scale = Math.max(0.6, Math.min(2.5, baseScale));
             
             // 폰트 크기 동적 조정
             const displayValue = document.querySelector('.display-value');
