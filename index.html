@@ -322,6 +322,7 @@
             if (shouldResetDisplay) {
                 currentValue = '';
                 shouldResetDisplay = false;
+                expression = ''; // 새로운 계산 시작 시 이전 계산 과정 지우기
             }
 
             if (currentValue === '0') {
@@ -372,6 +373,16 @@
             const current = parseFloat(currentValue);
             let result;
 
+            const operatorSymbols = {
+                '+': '+',
+                '-': '-',
+                '*': '×',
+                '/': '÷'
+            };
+
+            // 완전한 계산 과정 저장
+            const fullExpression = `${previousValue}${operatorSymbols[operator]}${currentValue}`;
+
             switch (operator) {
                 case '+':
                     result = prev + current;
@@ -389,15 +400,17 @@
 
             if (result === 'Error') {
                 currentValue = 'Error';
+                expression = '';
             } else {
                 currentValue = result.toString();
                 if (currentValue.includes('.') && currentValue.split('.')[1].length > 8) {
                     currentValue = parseFloat(currentValue).toFixed(8).toString();
                     currentValue = parseFloat(currentValue).toString();
                 }
+                // 계산 완료 후에도 계산 과정을 하단에 표시
+                expression = fullExpression;
             }
 
-            expression = '';
             operator = '';
             previousValue = '';
             shouldResetDisplay = true;
