@@ -16,27 +16,27 @@
         html, body {
             width: 100%;
             height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
             background-color: transparent;
             overflow: hidden;
-            padding: 0;
         }
 
         .calculator {
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            height: 100%;
             background-color: #fffafb;
-            border-radius: clamp(10px, 3vw, 20px);
-            padding: clamp(10px, 4%, 20px);
-            box-shadow: 0 20px 40px rgba(255, 235, 237, 0.8), 0 10px 20px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
+            border-radius: 0;
+            padding: 4vh 4vw;
+            box-shadow: none;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .calculator::after {
@@ -45,89 +45,90 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 15%;
-            max-height: 50px;
+            height: 10vh;
             background: linear-gradient(to bottom, transparent, #ffebed);
-            border-radius: 0 0 20px 20px;
             pointer-events: none;
         }
 
         .display {
             background-color: #ffecef;
-            padding: 5%;
-            margin-bottom: 5%;
+            padding: 3vh 3vw;
+            margin-bottom: 3vh;
             text-align: right;
-            border-radius: 15px 15px 0 0;
+            border-radius: 2vh 2vh 0 0;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
         .result {
-            font-size: clamp(1.5rem, 10vw, 3rem);
+            font-size: 8vh;
             font-weight: 700;
             color: #000;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1vh;
             order: 1;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1;
         }
 
         .operation {
-            font-size: clamp(0.75rem, 5vw, 1.5rem);
+            font-size: 3.5vh;
             color: #000;
-            min-height: 1.2rem;
+            min-height: 4vh;
             order: 2;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1;
         }
 
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2.5%;
+            gap: 1.5vh;
+            flex: 1;
         }
 
         button {
             background-color: #ffecef;
             border: none;
-            border-radius: clamp(8px, 2vw, 15px);
+            border-radius: 1.5vh;
             padding: 0;
-            font-size: clamp(0.875rem, 5vw, 1.5rem);
+            font-size: 3.5vh;
             font-weight: 500;
             color: #000;
             cursor: pointer;
             transition: all 0.2s ease;
-            aspect-ratio: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 clamp(2px, 0.5vw, 4px) 0 #fee1e5, 0 clamp(2px, 0.5vw, 4px) clamp(4px, 1vw, 8px) rgba(241, 241, 246, 0.3);
+            box-shadow: 0 0.5vh 0 #fee1e5, 0 0.5vh 1vh rgba(241, 241, 246, 0.3);
             position: relative;
             top: 0;
         }
 
         .number {
             background-color: #ffffff;
-            box-shadow: 0 4px 0 #f1f1f6, 0 4px 8px rgba(241, 241, 246, 0.3);
+            box-shadow: 0 0.5vh 0 #f1f1f6, 0 0.5vh 1vh rgba(241, 241, 246, 0.3);
         }
 
         button:hover {
-            transform: translateY(1px);
-            box-shadow: 0 3px 0 #fee1e5, 0 3px 6px rgba(241, 241, 246, 0.3);
+            transform: translateY(0.2vh);
+            box-shadow: 0 0.3vh 0 #fee1e5, 0 0.3vh 0.8vh rgba(241, 241, 246, 0.3);
         }
 
         .number:hover {
-            transform: translateY(1px);
-            box-shadow: 0 3px 0 #f1f1f6, 0 3px 6px rgba(241, 241, 246, 0.3);
+            transform: translateY(0.2vh);
+            box-shadow: 0 0.3vh 0 #f1f1f6, 0 0.3vh 0.8vh rgba(241, 241, 246, 0.3);
         }
 
         button:active {
-            transform: translateY(4px);
+            transform: translateY(0.5vh);
             box-shadow: 0 0 0 #fee1e5, 0 0 0 rgba(241, 241, 246, 0.3);
         }
 
         .number:active {
-            transform: translateY(4px);
+            transform: translateY(0.5vh);
             box-shadow: 0 0 0 #f1f1f6, 0 0 0 rgba(241, 241, 246, 0.3);
         }
 
@@ -144,24 +145,9 @@
         }
 
         .backspace {
-            font-size: clamp(0.75rem, 4vw, 1.25rem);
+            font-size: 3vh;
         }
         
-        @media (max-width: 320px) {
-            .calculator {
-                width: 100%;
-                border-radius: 10px;
-            }
-            
-            .display {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-            
-            .buttons {
-                gap: 5px;
-            }
-        }
     </style>
 </head>
 <body>
