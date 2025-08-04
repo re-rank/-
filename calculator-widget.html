@@ -32,11 +32,12 @@
             height: 100%;
             background-color: #fffafb;
             border-radius: 0;
-            padding: 4vh 4vw;
+            padding: min(4vh, 20px) min(4vw, 20px);
             box-shadow: none;
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .calculator::after {
@@ -45,27 +46,28 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 10vh;
+            height: min(10vh, 40px);
             background: linear-gradient(to bottom, transparent, #ffebed);
             pointer-events: none;
         }
 
         .display {
             background-color: #ffecef;
-            padding: 3vh 3vw;
-            margin-bottom: 3vh;
+            padding: min(3vh, 15px) min(3vw, 15px);
+            margin-bottom: min(3vh, 15px);
             text-align: right;
-            border-radius: 2vh 2vh 0 0;
+            border-radius: min(2vh, 10px) min(2vh, 10px) 0 0;
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
+            min-height: 60px;
         }
 
         .result {
-            font-size: 8vh;
+            font-size: clamp(1.5rem, 8vh, 3rem);
             font-weight: 700;
             color: #000;
-            margin-bottom: 1vh;
+            margin-bottom: min(1vh, 5px);
             order: 1;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -73,9 +75,9 @@
         }
 
         .operation {
-            font-size: 3.5vh;
+            font-size: clamp(0.875rem, 3.5vh, 1.5rem);
             color: #000;
-            min-height: 4vh;
+            min-height: 1.2rem;
             order: 2;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -85,16 +87,18 @@
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5vh;
+            gap: min(1.5vh, 8px);
             flex: 1;
+            overflow: auto;
+            min-height: 0;
         }
 
         button {
             background-color: #ffecef;
             border: none;
-            border-radius: 1.5vh;
+            border-radius: min(1.5vh, 8px);
             padding: 0;
-            font-size: 3.5vh;
+            font-size: clamp(0.875rem, 3.5vh, 1.5rem);
             font-weight: 500;
             color: #000;
             cursor: pointer;
@@ -102,14 +106,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0.5vh 0 #fee1e5, 0 0.5vh 1vh rgba(241, 241, 246, 0.3);
+            box-shadow: 0 min(0.5vh, 3px) 0 #fee1e5, 0 min(0.5vh, 3px) min(1vh, 6px) rgba(241, 241, 246, 0.3);
             position: relative;
             top: 0;
+            min-height: 35px;
+            aspect-ratio: 1;
         }
 
         .number {
             background-color: #ffffff;
-            box-shadow: 0 0.5vh 0 #f1f1f6, 0 0.5vh 1vh rgba(241, 241, 246, 0.3);
+            box-shadow: 0 min(0.5vh, 3px) 0 #f1f1f6, 0 min(0.5vh, 3px) min(1vh, 6px) rgba(241, 241, 246, 0.3);
         }
 
         button:hover {
@@ -145,7 +151,7 @@
         }
 
         .backspace {
-            font-size: 3vh;
+            font-size: clamp(0.75rem, 3vh, 1.25rem);
         }
         
     </style>
