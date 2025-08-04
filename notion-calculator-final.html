@@ -107,6 +107,107 @@
         .key.eq:active {
             background: #ff5252;
         }
+
+        /* 반응형 - 높이 기반 */
+        @media (max-height: 500px) {
+            .calc {
+                padding: 5px;
+                gap: 5px;
+            }
+            .screen {
+                flex: 0 0 60px;
+                padding: 10px 15px;
+            }
+            .expr {
+                font-size: 12px;
+                height: 20px;
+            }
+            .val {
+                font-size: 24px;
+                height: 30px;
+            }
+            .keys {
+                gap: 5px;
+            }
+            .key {
+                font-size: 16px;
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-height: 400px) {
+            .calc {
+                padding: 3px;
+                gap: 3px;
+            }
+            .screen {
+                flex: 0 0 50px;
+                padding: 8px 12px;
+                border-radius: 8px;
+            }
+            .expr {
+                font-size: 10px;
+                height: 18px;
+            }
+            .val {
+                font-size: 20px;
+                height: 25px;
+            }
+            .keys {
+                gap: 3px;
+            }
+            .key {
+                font-size: 14px;
+                border-radius: 6px;
+            }
+        }
+
+        @media (max-height: 300px) {
+            .screen {
+                flex: 0 0 40px;
+                padding: 5px 10px;
+            }
+            .expr {
+                font-size: 9px;
+                height: 15px;
+            }
+            .val {
+                font-size: 16px;
+                height: 20px;
+            }
+            .key {
+                font-size: 12px;
+                border-radius: 4px;
+            }
+        }
+
+        /* 반응형 - 너비 기반 */
+        @media (max-width: 350px) {
+            .calc {
+                padding: 5px;
+            }
+            .keys {
+                gap: 5px;
+            }
+            .key {
+                font-size: 16px;
+            }
+        }
+
+        /* 비율 기반 조정 */
+        @media (aspect-ratio < 1/2) {
+            /* 매우 세로가 긴 화면 */
+            .screen {
+                flex: 0 0 10%;
+            }
+        }
+
+        @media (aspect-ratio > 2/1) {
+            /* 매우 가로가 긴 화면 */
+            .calc {
+                max-width: 50vh;
+            }
+        }
     </style>
 </head>
 <body>
