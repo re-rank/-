@@ -63,7 +63,7 @@
         }
 
         .result {
-            font-size: 6vmin;
+            font-size: 5vmin;
             font-weight: 700;
             color: #000;
             margin-bottom: 0.5%;
@@ -74,7 +74,7 @@
         }
 
         .operation {
-            font-size: 3vmin;
+            font-size: 2.5vmin;
             color: #000;
             order: 2;
             overflow: hidden;
@@ -95,7 +95,7 @@
             border: none;
             border-radius: 10%;
             padding: 0;
-            font-size: 3vmin;
+            font-size: 2.5vmin;
             font-weight: 500;
             color: #000;
             cursor: pointer;
@@ -147,36 +147,71 @@
         }
 
         .backspace {
-            font-size: 2.5vmin;
+            font-size: 2vmin;
         }
         
         /* 매우 작은 크기에서도 보이도록 */
         @media (max-aspect-ratio: 1/1) {
             .result {
-                font-size: 5vw;
+                font-size: 4vw;
             }
             .operation {
-                font-size: 2.5vw;
+                font-size: 2vw;
             }
             button {
-                font-size: 2.5vw;
+                font-size: 2vw;
             }
         }
         
         /* 컨테이너가 매우 작을 때 */
-        @media (max-width: 200px) or (max-height: 200px) {
+        @media (max-width: 150px) or (max-height: 150px) {
             .calculator {
                 padding: 1%;
             }
             .display {
                 padding: 1%;
                 margin-bottom: 1%;
+                border-radius: 1% 1% 0 0;
             }
             .buttons {
                 gap: 0.5%;
             }
             button {
                 border-radius: 5%;
+                font-size: 1.8vmin;
+            }
+            .result {
+                font-size: 3vmin;
+            }
+            .operation {
+                font-size: 1.5vmin;
+            }
+        }
+        
+        /* 극도로 작은 크기 */
+        @media (max-width: 100px) or (max-height: 100px) {
+            .calculator {
+                padding: 0.5%;
+            }
+            .display {
+                padding: 0.5%;
+                margin-bottom: 0.5%;
+            }
+            .buttons {
+                gap: 0.3%;
+            }
+            button {
+                border-radius: 3%;
+                font-size: 1.5vmin;
+            }
+            .result {
+                font-size: 2.5vmin;
+            }
+            .operation {
+                font-size: 1.2vmin;
+            }
+            .backspace {
+                font-size: 1.2vmin;
             }
         }
     </style>
