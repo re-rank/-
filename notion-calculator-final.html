@@ -19,13 +19,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .calc {
             width: 100%;
             height: 100%;
-            max-width: 400px;
-            max-height: 600px;
+            max-width: min(400px, 100vh);
+            max-height: min(600px, 100vh);
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -348,36 +349,91 @@
 
         // 동적 크기 조절
         function adjustSize() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-            
             const height = window.innerHeight;
             const width = window.innerWidth;
             const calc = document.querySelector('.calc');
             const screen = document.querySelector('.screen');
             const val = document.querySelector('.val');
+            const expr = document.querySelector('.expr');
             const keys = document.querySelectorAll('.key');
+            const keysGrid = document.querySelector('.keys');
             
-            // 높이에 따른 동적 조절
-            if (height < 400) {
+            // 가로가 매우 긴 경우 처리
+            if (width > height * 1.5) {
+                // 계산기를 세로 중심으로 제한
+                calc.style.maxWidth = `${height * 0.7}px`;
+                calc.style.height = '100%';
                 calc.style.maxHeight = '100%';
-                screen.style.flex = `0 0 ${height * 0.12}px`;
-                val.style.fontSize = `${height * 0.05}px`;
-                keys.forEach(k => k.style.fontSize = `${height * 0.04}px`);
-            } else if (height < 600) {
-                screen.style.flex = `0 0 ${height * 0.13}px`;
-                val.style.fontSize = `${height * 0.055}px`;
-                keys.forEach(k => k.style.fontSize = `${height * 0.035}px`);
             } else {
-                screen.style.flex = '0 0 80px';
-                val.style.fontSize = '32px';
-                keys.forEach(k => k.style.fontSize = '20px');
+                calc.style.maxWidth = 'min(400px, 100vh)';
+                calc.style.maxHeight = 'min(600px, 100vh)';
             }
             
-            // 너비에 따른 조절
-            if (width < 300) {
+            // 높이에 따른 동적 조절
+            if (height < 300) {
+                calc.style.padding = '2px';
+                calc.style.gap = '2px';
+                screen.style.flex = '0 0 35px';
+                screen.style.padding = '5px 10px';
+                val.style.fontSize = '14px';
+                val.style.height = '20px';
+                expr.style.fontSize = '9px';
+                expr.style.height = '12px';
+                keysGrid.style.gap = '2px';
+                keys.forEach(k => {
+                    k.style.fontSize = '11px';
+                    k.style.borderRadius = '4px';
+                });
+            } else if (height < 400) {
                 calc.style.padding = '3px';
                 calc.style.gap = '3px';
+                screen.style.flex = '0 0 45px';
+                screen.style.padding = '8px 12px';
+                val.style.fontSize = '18px';
+                val.style.height = '25px';
+                expr.style.fontSize = '10px';
+                expr.style.height = '15px';
+                keysGrid.style.gap = '3px';
+                keys.forEach(k => {
+                    k.style.fontSize = '13px';
+                    k.style.borderRadius = '6px';
+                });
+            } else if (height < 500) {
+                calc.style.padding = '5px';
+                calc.style.gap = '5px';
+                screen.style.flex = '0 0 60px';
+                screen.style.padding = '10px 15px';
+                val.style.fontSize = '24px';
+                val.style.height = '30px';
+                expr.style.fontSize = '12px';
+                expr.style.height = '20px';
+                keysGrid.style.gap = '5px';
+                keys.forEach(k => {
+                    k.style.fontSize = '16px';
+                    k.style.borderRadius = '8px';
+                });
+            } else {
+                // 기본값 복원
+                calc.style.padding = '10px';
+                calc.style.gap = '10px';
+                screen.style.flex = '0 0 80px';
+                screen.style.padding = '15px 20px';
+                val.style.fontSize = '32px';
+                val.style.height = '40px';
+                expr.style.fontSize = '14px';
+                expr.style.height = '25px';
+                keysGrid.style.gap = '8px';
+                keys.forEach(k => {
+                    k.style.fontSize = '20px';
+                    k.style.borderRadius = '10px';
+                });
+            }
+            
+            // 너비에 따른 추가 조절
+            if (width < 250) {
+                calc.style.padding = '2px';
+                keysGrid.style.gap = '2px';
+                keys.forEach(k => k.style.fontSize = '12px');
             }
         }
 
@@ -386,11 +442,28 @@
         window.addEventListener('resize', adjustSize);
         window.addEventListener('orientationchange', adjustSize);
         
+        // ResizeObserver로 더 정확한 감지
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(() => {
+                adjustSize();
+            });
+            resizeObserver.observe(document.body);
+            resizeObserver.observe(document.querySelector('.calc'));
+        }
+        
         // iframe 내부 로드 감지
         if (window.self !== window.top) {
-            setTimeout(adjustSize, 100);
-            setTimeout(adjustSize, 500);
+            // 여러 번 시도하여 확실히 조정
+            [10, 50, 100, 200, 500, 1000].forEach(delay => {
+                setTimeout(adjustSize, delay);
+            });
         }
+        
+        // 페이지 완전 로드 후 재조정
+        window.addEventListener('load', () => {
+            adjustSize();
+            setTimeout(adjustSize, 100);
+        });
     </script>
 </body>
 </html>
