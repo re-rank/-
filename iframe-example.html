@@ -68,10 +68,10 @@
         <h2>3. 반응형 iframe 코드</h2>
         <div class="iframe-container">
             <p>크기가 자동으로 조절되는 반응형 코드:</p>
-            <pre>&lt;div style="position: relative; width: 100%; max-width: 360px; margin: 0 auto;"&gt;
+            <pre>&lt;div style="position: relative; width: 100%; padding-bottom: 100%; overflow: hidden;"&gt;
     &lt;iframe 
         src="calculator-widget.html"
-        style="position: relative; width: 100%; height: 600px; border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
         title="계산기 위젯"&gt;
     &lt;/iframe&gt;
 &lt;/div&gt;</pre>
@@ -79,14 +79,16 @@
 
         <h2>4. 데모</h2>
         <div class="demo">
-            <iframe 
-                src="calculator-widget.html"
-                width="360"
-                height="600"
-                frameborder="0"
-                style="border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"
-                title="계산기 위젯">
-            </iframe>
+            <p>크기 조절 가능한 데모 (컨테이너 크기를 조절해보세요):</p>
+            <div style="position: relative; width: 50%; min-width: 200px; max-width: 400px; margin: 0 auto; resize: both; overflow: auto; border: 2px dashed #ddd; padding: 5px;">
+                <div style="position: relative; width: 100%; padding-bottom: 100%; overflow: hidden;">
+                    <iframe 
+                        src="calculator-widget.html"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                        title="계산기 위젯">
+                    </iframe>
+                </div>
+            </div>
         </div>
 
         <h2>5. 노션 삽입 방법</h2>
