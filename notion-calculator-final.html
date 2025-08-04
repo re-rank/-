@@ -11,378 +11,300 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
+        body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #fffafb;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
 
-        .calculator-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            min-height: 300px;
+        .container {
+            width: 100%;
+            height: 100%;
+            max-width: 400px;
+            max-height: 600px;
             display: flex;
             flex-direction: column;
-            padding: 4px;
+            padding: 10px;
         }
 
-        .display-area {
+        .display {
             background: #ffecef;
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            height: 60px;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            flex-shrink: 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .expression {
-            font-size: 12px;
+            font-size: 14px;
             color: #999;
             text-align: right;
-            line-height: 1.2;
-            height: 40%;
+            height: 35%;
         }
 
-        .result {
-            font-size: 20px;
+        .value {
+            font-size: 28px;
             color: #333;
             font-weight: 600;
             text-align: right;
-            line-height: 1.2;
-            height: 60%;
+            height: 65%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .button-area {
+        .buttons {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 4px;
-            min-height: 0;
+            gap: 8px;
         }
 
-        .btn {
+        button {
             background: #ffecef;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 20px;
             color: #333;
             font-weight: 500;
             cursor: pointer;
-            box-shadow: 0 2px 0 #fee1e5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 3px 0 #fee1e5, 0 4px 8px rgba(0,0,0,0.1);
             transition: all 0.1s;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            touch-action: manipulation;
         }
 
-        .btn:active {
-            transform: translateY(1px);
+        button:active {
+            transform: translateY(3px);
             box-shadow: none;
             background: #fee1e5;
         }
 
-        .btn-number {
+        .num {
             background: white;
-            box-shadow: 0 2px 0 #e0e0e0;
+            box-shadow: 0 3px 0 #e0e0e0, 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .btn-number:active {
+        .num:active {
             background: #f5f5f5;
         }
 
-        .btn-operator {
+        .op {
             color: #ff6b6b;
             font-weight: 600;
         }
 
-        .btn-clear {
+        .clear {
             color: #ff4757;
             font-weight: 600;
         }
 
-        .btn-ce {
+        .ce {
             color: #ff6348;
             font-weight: 600;
         }
 
-        .btn-equals {
+        .equals {
             color: #ff6b6b;
             font-weight: 600;
         }
 
-        .btn-backspace {
+        .back {
             background: white;
-            font-size: 14px;
-            box-shadow: 0 2px 0 #e0e0e0;
+            font-size: 18px;
+            box-shadow: 0 3px 0 #e0e0e0, 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .btn-backspace:active {
+        .back:active {
             background: #f5f5f5;
+        }
+
+        /* 작은 화면 대응 */
+        @media (max-width: 350px) {
+            .container {
+                padding: 5px;
+            }
+            .display {
+                height: 70px;
+                padding: 10px 15px;
+            }
+            .value {
+                font-size: 24px;
+            }
+            .buttons {
+                gap: 5px;
+            }
+            button {
+                font-size: 16px;
+                border-radius: 8px;
+            }
+        }
+
+        /* 매우 작은 높이 대응 */
+        @media (max-height: 400px) {
+            .container {
+                max-height: 100%;
+            }
+            .display {
+                height: 60px;
+            }
+            .value {
+                font-size: 20px;
+            }
+            .expression {
+                font-size: 12px;
+            }
+            button {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="calculator-wrapper">
-        <div class="display-area">
-            <div class="expression" id="expression"></div>
-            <div class="result" id="result">0</div>
+    <div class="container">
+        <div class="display">
+            <div class="expression" id="expr"></div>
+            <div class="value" id="val">0</div>
         </div>
-        <div class="button-area">
-            <button class="btn btn-operator" onclick="handlePercentage()">%</button>
-            <button class="btn btn-ce" onclick="clearEntry()">CE</button>
-            <button class="btn btn-clear" onclick="clearAll()">C</button>
-            <button class="btn btn-operator" onclick="setOperator('/')">÷</button>
+        <div class="buttons">
+            <button class="op" onclick="per()">%</button>
+            <button class="ce" onclick="ce()">CE</button>
+            <button class="clear" onclick="clr()">C</button>
+            <button class="op" onclick="op('/')">÷</button>
             
-            <button class="btn btn-number" onclick="appendNumber('7')">7</button>
-            <button class="btn btn-number" onclick="appendNumber('8')">8</button>
-            <button class="btn btn-number" onclick="appendNumber('9')">9</button>
-            <button class="btn btn-operator" onclick="setOperator('*')">×</button>
+            <button class="num" onclick="num('7')">7</button>
+            <button class="num" onclick="num('8')">8</button>
+            <button class="num" onclick="num('9')">9</button>
+            <button class="op" onclick="op('*')">×</button>
             
-            <button class="btn btn-number" onclick="appendNumber('4')">4</button>
-            <button class="btn btn-number" onclick="appendNumber('5')">5</button>
-            <button class="btn btn-number" onclick="appendNumber('6')">6</button>
-            <button class="btn btn-operator" onclick="setOperator('-')">-</button>
+            <button class="num" onclick="num('4')">4</button>
+            <button class="num" onclick="num('5')">5</button>
+            <button class="num" onclick="num('6')">6</button>
+            <button class="op" onclick="op('-')">-</button>
             
-            <button class="btn btn-number" onclick="appendNumber('1')">1</button>
-            <button class="btn btn-number" onclick="appendNumber('2')">2</button>
-            <button class="btn btn-number" onclick="appendNumber('3')">3</button>
-            <button class="btn btn-operator" onclick="setOperator('+')">+</button>
+            <button class="num" onclick="num('1')">1</button>
+            <button class="num" onclick="num('2')">2</button>
+            <button class="num" onclick="num('3')">3</button>
+            <button class="op" onclick="op('+')">+</button>
             
-            <button class="btn btn-number" onclick="appendDecimal()">.</button>
-            <button class="btn btn-number" onclick="appendNumber('0')">0</button>
-            <button class="btn btn-backspace" onclick="backspace()">⌫</button>
-            <button class="btn btn-equals" onclick="calculate()">=</button>
+            <button class="num" onclick="dec()">.</button>
+            <button class="num" onclick="num('0')">0</button>
+            <button class="back" onclick="back()">⌫</button>
+            <button class="equals" onclick="calc()">=</button>
         </div>
     </div>
 
     <script>
-        let currentValue = '0';
-        let previousValue = '';
-        let operator = '';
-        let shouldResetDisplay = false;
-        let expression = '';
+        let cur = '0', prev = '', opr = '', reset = false, exp = '';
+        const d = document.getElementById('val');
+        const e = document.getElementById('expr');
 
-        const resultElement = document.getElementById('result');
-        const expressionElement = document.getElementById('expression');
+        function upd() {
+            d.textContent = cur;
+            e.textContent = exp;
+        }
 
-        // 동적 크기 조정
-        function adjustSizes() {
-            const wrapper = document.querySelector('.calculator-wrapper');
-            const height = wrapper.clientHeight;
-            const width = wrapper.clientWidth;
+        function clr() {
+            cur = '0'; prev = ''; opr = ''; reset = false; exp = '';
+            upd();
+        }
+
+        function ce() {
+            cur = '0'; reset = false;
+            upd();
+        }
+
+        function back() {
+            cur = cur.length > 1 ? cur.slice(0, -1) : '0';
+            upd();
+        }
+
+        function num(n) {
+            if (reset) { cur = ''; reset = false; }
+            cur = cur === '0' ? n : cur.length < 12 ? cur + n : cur;
+            upd();
+        }
+
+        function dec() {
+            if (reset) { cur = '0'; reset = false; }
+            if (!cur.includes('.')) {
+                cur += '.';
+                upd();
+            }
+        }
+
+        function op(o) {
+            if (opr && !reset) calc();
+            prev = cur; opr = o; reset = true;
+            exp = `${prev} ${o === '*' ? '×' : o === '/' ? '÷' : o}`;
+            upd();
+        }
+
+        function calc() {
+            if (!opr || !prev) return;
+            const p = parseFloat(prev), c = parseFloat(cur);
+            let r;
             
-            // 높이에 따른 조정
-            if (height < 400) {
-                // 매우 작은 높이
-                document.querySelector('.display-area').style.height = '50px';
-                document.querySelector('.result').style.fontSize = '16px';
-                document.querySelector('.expression').style.fontSize = '10px';
-                
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.style.fontSize = '12px';
-                });
-            } else if (height < 500) {
-                // 작은 높이
-                document.querySelector('.display-area').style.height = '55px';
-                document.querySelector('.result').style.fontSize = '18px';
-                document.querySelector('.expression').style.fontSize = '11px';
-                
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.style.fontSize = '14px';
-                });
-            } else if (height > 700) {
-                // 큰 높이
-                document.querySelector('.display-area').style.height = '70px';
-                document.querySelector('.result').style.fontSize = '24px';
-                document.querySelector('.expression').style.fontSize = '14px';
-                
-                document.querySelectorAll('.btn').forEach(btn => {
-                    btn.style.fontSize = '18px';
-                });
+            switch (opr) {
+                case '+': r = p + c; break;
+                case '-': r = p - c; break;
+                case '*': r = p * c; break;
+                case '/': r = c !== 0 ? p / c : 'Error'; break;
             }
             
-            // 너비에 따른 조정
-            if (width < 300) {
-                document.querySelector('.calculator-wrapper').style.padding = '2px';
-                document.querySelector('.button-area').style.gap = '2px';
-            } else if (width > 600) {
-                document.querySelector('.button-area').style.maxWidth = '400px';
-                document.querySelector('.button-area').style.margin = '0 auto';
+            cur = r === 'Error' ? 'Error' : r.toString();
+            if (cur !== 'Error' && cur.includes('.') && cur.split('.')[1]?.length > 8) {
+                cur = parseFloat(parseFloat(cur).toFixed(8)).toString();
             }
-        }
-
-        // 초기화 및 리사이즈 감지
-        window.addEventListener('DOMContentLoaded', () => {
-            adjustSizes();
             
-            // ResizeObserver 사용
-            if (window.ResizeObserver) {
-                const observer = new ResizeObserver(adjustSizes);
-                observer.observe(document.querySelector('.calculator-wrapper'));
-            }
-        });
-
-        window.addEventListener('resize', adjustSizes);
-
-        // 계산기 기능
-        function updateDisplay() {
-            resultElement.textContent = currentValue;
-            expressionElement.textContent = expression;
+            exp = ''; opr = ''; prev = ''; reset = true;
+            upd();
         }
 
-        function clearAll() {
-            currentValue = '0';
-            previousValue = '';
-            operator = '';
-            shouldResetDisplay = false;
-            expression = '';
-            updateDisplay();
+        function per() {
+            cur = (parseFloat(cur) / 100).toString();
+            upd();
         }
 
-        function clearEntry() {
-            currentValue = '0';
-            shouldResetDisplay = false;
-            updateDisplay();
-        }
-
-        function backspace() {
-            if (currentValue.length > 1) {
-                currentValue = currentValue.slice(0, -1);
-            } else {
-                currentValue = '0';
-            }
-            updateDisplay();
-        }
-
-        function appendNumber(num) {
-            if (shouldResetDisplay) {
-                currentValue = '';
-                shouldResetDisplay = false;
-            }
-
-            if (currentValue === '0') {
-                currentValue = num;
-            } else if (currentValue.length < 12) {
-                currentValue += num;
-            }
-
-            updateDisplay();
-        }
-
-        function appendDecimal() {
-            if (shouldResetDisplay) {
-                currentValue = '0';
-                shouldResetDisplay = false;
-            }
-
-            if (!currentValue.includes('.')) {
-                currentValue += '.';
-                updateDisplay();
-            }
-        }
-
-        function setOperator(op) {
-            if (operator && !shouldResetDisplay) {
-                calculate();
-            }
-
-            previousValue = currentValue;
-            operator = op;
-            shouldResetDisplay = true;
-
-            const symbols = {'+': '+', '-': '-', '*': '×', '/': '÷'};
-            expression = `${previousValue} ${symbols[op]}`;
-            updateDisplay();
-        }
-
-        function calculate() {
-            if (!operator || !previousValue) return;
-
-            const prev = parseFloat(previousValue);
-            const current = parseFloat(currentValue);
-            let result;
-
-            switch (operator) {
-                case '+': result = prev + current; break;
-                case '-': result = prev - current; break;
-                case '*': result = prev * current; break;
-                case '/': result = current !== 0 ? prev / current : 'Error'; break;
-            }
-
-            if (result === 'Error') {
-                currentValue = 'Error';
-            } else {
-                currentValue = result.toString();
-                if (currentValue.includes('.') && currentValue.split('.')[1]?.length > 8) {
-                    currentValue = parseFloat(result.toFixed(8)).toString();
-                }
-            }
-
-            expression = '';
-            operator = '';
-            previousValue = '';
-            shouldResetDisplay = true;
-            updateDisplay();
-        }
-
-        function handlePercentage() {
-            currentValue = (parseFloat(currentValue) / 100).toString();
-            updateDisplay();
-        }
-
-        // 키보드 지원
-        document.addEventListener('keydown', (e) => {
-            if (e.key >= '0' && e.key <= '9') {
-                e.preventDefault();
-                appendNumber(e.key);
-            } else if (e.key === '.') {
-                e.preventDefault();
-                appendDecimal();
-            } else if ('+-*/'.includes(e.key)) {
-                e.preventDefault();
-                setOperator(e.key);
-            } else if (e.key === 'Enter' || e.key === '=') {
-                e.preventDefault();
-                calculate();
-            } else if (e.key === 'Escape') {
-                e.preventDefault();
-                clearAll();
-            } else if (e.key === 'Delete') {
-                e.preventDefault();
-                clearEntry();
-            } else if (e.key === 'Backspace') {
-                e.preventDefault();
-                backspace();
-            } else if (e.key === '%') {
-                e.preventDefault();
-                handlePercentage();
-            }
+        // 키보드
+        document.addEventListener('keydown', (k) => {
+            k.preventDefault();
+            if (k.key >= '0' && k.key <= '9') num(k.key);
+            else if (k.key === '.') dec();
+            else if ('+-*/'.includes(k.key)) op(k.key);
+            else if (k.key === 'Enter' || k.key === '=') calc();
+            else if (k.key === 'Escape') clr();
+            else if (k.key === 'Delete') ce();
+            else if (k.key === 'Backspace') back();
+            else if (k.key === '%') per();
         });
 
         // 터치 스크롤 방지
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
+        document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
-        // iframe 로드 완료 후 크기 재조정
-        window.addEventListener('load', () => {
-            setTimeout(adjustSizes, 100);
-            setTimeout(adjustSizes, 500);
-        });
+        // 크기 조정
+        function resize() {
+            const h = window.innerHeight;
+            const w = window.innerWidth;
+            
+            if (h < 500 || w < 300) {
+                document.querySelector('.container').style.maxHeight = '100%';
+                document.querySelector('.container').style.maxWidth = '100%';
+            }
+        }
+
+        window.addEventListener('resize', resize);
+        window.addEventListener('load', resize);
     </script>
 </body>
 </html>
