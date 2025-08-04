@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>노션 반려동물 가계부 계산기</title>
+    <title>노션 계산기</title>
     <style>
         * {
             margin: 0;
@@ -12,57 +12,51 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #fffafb;
-            width: 100vw;
+            width: 100%;
             height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fffafb;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        .container {
+        .calc {
             width: 100%;
             height: 100%;
             max-width: 400px;
             max-height: 600px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            gap: 10px;
         }
 
-        .display {
+        .screen {
             background: #ffecef;
             border-radius: 12px;
             padding: 15px 20px;
-            margin-bottom: 10px;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex: 0 0 80px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .expression {
+        .expr {
             font-size: 14px;
             color: #999;
             text-align: right;
-            height: 35%;
+            height: 25px;
         }
 
-        .value {
-            font-size: 28px;
+        .val {
+            font-size: 32px;
             color: #333;
-            font-weight: 600;
+            font-weight: bold;
             text-align: right;
-            height: 65%;
+            height: 40px;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .buttons {
+        .keys {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -70,204 +64,166 @@
             gap: 8px;
         }
 
-        button {
-            background: #ffecef;
+        .key {
             border: none;
             border-radius: 10px;
             font-size: 20px;
-            color: #333;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 3px 0 #fee1e5, 0 4px 8px rgba(0,0,0,0.1);
+            background: #ffecef;
+            color: #333;
+            box-shadow: 0 3px 0 #fee1e5;
             transition: all 0.1s;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
         }
 
-        button:active {
+        .key:active {
             transform: translateY(3px);
             box-shadow: none;
-            background: #fee1e5;
         }
 
-        .num {
+        .key.num {
             background: white;
-            box-shadow: 0 3px 0 #e0e0e0, 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 0 #e0e0e0;
         }
 
-        .num:active {
+        .key.num:active {
             background: #f5f5f5;
         }
 
-        .op {
+        .key.op {
             color: #ff6b6b;
-            font-weight: 600;
         }
 
-        .clear {
+        .key.clr {
             color: #ff4757;
-            font-weight: 600;
         }
 
-        .ce {
-            color: #ff6348;
-            font-weight: 600;
+        .key.eq {
+            background: #ff6b6b;
+            color: white;
+            box-shadow: 0 3px 0 #ff5252;
         }
 
-        .equals {
-            color: #ff6b6b;
-            font-weight: 600;
-        }
-
-        .back {
-            background: white;
-            font-size: 18px;
-            box-shadow: 0 3px 0 #e0e0e0, 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .back:active {
-            background: #f5f5f5;
-        }
-
-        /* 작은 화면 대응 */
-        @media (max-width: 350px) {
-            .container {
-                padding: 5px;
-            }
-            .display {
-                height: 70px;
-                padding: 10px 15px;
-            }
-            .value {
-                font-size: 24px;
-            }
-            .buttons {
-                gap: 5px;
-            }
-            button {
-                font-size: 16px;
-                border-radius: 8px;
-            }
-        }
-
-        /* 매우 작은 높이 대응 */
-        @media (max-height: 400px) {
-            .container {
-                max-height: 100%;
-            }
-            .display {
-                height: 60px;
-            }
-            .value {
-                font-size: 20px;
-            }
-            .expression {
-                font-size: 12px;
-            }
-            button {
-                font-size: 14px;
-            }
+        .key.eq:active {
+            background: #ff5252;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="display">
-            <div class="expression" id="expr"></div>
-            <div class="value" id="val">0</div>
+    <div class="calc">
+        <div class="screen">
+            <div class="expr" id="e"></div>
+            <div class="val" id="v">0</div>
         </div>
-        <div class="buttons">
-            <button class="op" onclick="per()">%</button>
-            <button class="ce" onclick="ce()">CE</button>
-            <button class="clear" onclick="clr()">C</button>
-            <button class="op" onclick="op('/')">÷</button>
+        <div class="keys">
+            <button class="key op" onclick="per()">%</button>
+            <button class="key" onclick="ce()">CE</button>
+            <button class="key clr" onclick="ac()">C</button>
+            <button class="key op" onclick="op('÷')">÷</button>
             
-            <button class="num" onclick="num('7')">7</button>
-            <button class="num" onclick="num('8')">8</button>
-            <button class="num" onclick="num('9')">9</button>
-            <button class="op" onclick="op('*')">×</button>
+            <button class="key num" onclick="n('7')">7</button>
+            <button class="key num" onclick="n('8')">8</button>
+            <button class="key num" onclick="n('9')">9</button>
+            <button class="key op" onclick="op('×')">×</button>
             
-            <button class="num" onclick="num('4')">4</button>
-            <button class="num" onclick="num('5')">5</button>
-            <button class="num" onclick="num('6')">6</button>
-            <button class="op" onclick="op('-')">-</button>
+            <button class="key num" onclick="n('4')">4</button>
+            <button class="key num" onclick="n('5')">5</button>
+            <button class="key num" onclick="n('6')">6</button>
+            <button class="key op" onclick="op('-')">-</button>
             
-            <button class="num" onclick="num('1')">1</button>
-            <button class="num" onclick="num('2')">2</button>
-            <button class="num" onclick="num('3')">3</button>
-            <button class="op" onclick="op('+')">+</button>
+            <button class="key num" onclick="n('1')">1</button>
+            <button class="key num" onclick="n('2')">2</button>
+            <button class="key num" onclick="n('3')">3</button>
+            <button class="key op" onclick="op('+')">+</button>
             
-            <button class="num" onclick="dec()">.</button>
-            <button class="num" onclick="num('0')">0</button>
-            <button class="back" onclick="back()">⌫</button>
-            <button class="equals" onclick="calc()">=</button>
+            <button class="key num" onclick="dot()">.</button>
+            <button class="key num" onclick="n('0')">0</button>
+            <button class="key num" onclick="del()">⌫</button>
+            <button class="key eq" onclick="eq()">=</button>
         </div>
     </div>
 
     <script>
-        let cur = '0', prev = '', opr = '', reset = false, exp = '';
-        const d = document.getElementById('val');
-        const e = document.getElementById('expr');
+        let cur = '0', prev = '', oper = '', newNum = true;
+        const vEl = document.getElementById('v');
+        const eEl = document.getElementById('e');
 
         function upd() {
-            d.textContent = cur;
-            e.textContent = exp;
+            vEl.textContent = cur;
+            eEl.textContent = prev + (oper ? ' ' + oper : '');
         }
 
-        function clr() {
-            cur = '0'; prev = ''; opr = ''; reset = false; exp = '';
+        function ac() {
+            cur = '0';
+            prev = '';
+            oper = '';
+            newNum = true;
             upd();
         }
 
         function ce() {
-            cur = '0'; reset = false;
+            cur = '0';
+            newNum = true;
             upd();
         }
 
-        function back() {
-            cur = cur.length > 1 ? cur.slice(0, -1) : '0';
-            upd();
-        }
-
-        function num(n) {
-            if (reset) { cur = ''; reset = false; }
-            cur = cur === '0' ? n : cur.length < 12 ? cur + n : cur;
-            upd();
-        }
-
-        function dec() {
-            if (reset) { cur = '0'; reset = false; }
-            if (!cur.includes('.')) {
-                cur += '.';
-                upd();
+        function del() {
+            if (cur.length > 1) {
+                cur = cur.slice(0, -1);
+            } else {
+                cur = '0';
             }
+            upd();
+        }
+
+        function n(num) {
+            if (newNum || cur === '0') {
+                cur = num;
+                newNum = false;
+            } else if (cur.length < 12) {
+                cur += num;
+            }
+            upd();
+        }
+
+        function dot() {
+            if (newNum) {
+                cur = '0.';
+                newNum = false;
+            } else if (!cur.includes('.')) {
+                cur += '.';
+            }
+            upd();
         }
 
         function op(o) {
-            if (opr && !reset) calc();
-            prev = cur; opr = o; reset = true;
-            exp = `${prev} ${o === '*' ? '×' : o === '/' ? '÷' : o}`;
+            if (oper && !newNum) {
+                eq();
+            }
+            prev = cur;
+            oper = o;
+            newNum = true;
             upd();
         }
 
-        function calc() {
-            if (!opr || !prev) return;
-            const p = parseFloat(prev), c = parseFloat(cur);
-            let r;
+        function eq() {
+            if (!oper || !prev) return;
             
-            switch (opr) {
-                case '+': r = p + c; break;
-                case '-': r = p - c; break;
-                case '*': r = p * c; break;
-                case '/': r = c !== 0 ? p / c : 'Error'; break;
+            const p = parseFloat(prev);
+            const c = parseFloat(cur);
+            let res;
+            
+            switch(oper) {
+                case '+': res = p + c; break;
+                case '-': res = p - c; break;
+                case '×': res = p * c; break;
+                case '÷': res = c !== 0 ? p / c : 'Error'; break;
             }
             
-            cur = r === 'Error' ? 'Error' : r.toString();
-            if (cur !== 'Error' && cur.includes('.') && cur.split('.')[1]?.length > 8) {
-                cur = parseFloat(parseFloat(cur).toFixed(8)).toString();
-            }
-            
-            exp = ''; opr = ''; prev = ''; reset = true;
+            cur = res === 'Error' ? 'Error' : res.toString();
+            prev = '';
+            oper = '';
+            newNum = true;
             upd();
         }
 
@@ -276,35 +232,18 @@
             upd();
         }
 
-        // 키보드
-        document.addEventListener('keydown', (k) => {
-            k.preventDefault();
-            if (k.key >= '0' && k.key <= '9') num(k.key);
-            else if (k.key === '.') dec();
-            else if ('+-*/'.includes(k.key)) op(k.key);
-            else if (k.key === 'Enter' || k.key === '=') calc();
-            else if (k.key === 'Escape') clr();
-            else if (k.key === 'Delete') ce();
-            else if (k.key === 'Backspace') back();
-            else if (k.key === '%') per();
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') n(e.key);
+            else if (e.key === '.') dot();
+            else if (e.key === '+') op('+');
+            else if (e.key === '-') op('-');
+            else if (e.key === '*') op('×');
+            else if (e.key === '/') op('÷');
+            else if (e.key === 'Enter' || e.key === '=') eq();
+            else if (e.key === 'Escape') ac();
+            else if (e.key === 'Backspace') del();
+            else if (e.key === '%') per();
         });
-
-        // 터치 스크롤 방지
-        document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
-
-        // 크기 조정
-        function resize() {
-            const h = window.innerHeight;
-            const w = window.innerWidth;
-            
-            if (h < 500 || w < 300) {
-                document.querySelector('.container').style.maxHeight = '100%';
-                document.querySelector('.container').style.maxWidth = '100%';
-            }
-        }
-
-        window.addEventListener('resize', resize);
-        window.addEventListener('load', resize);
     </script>
 </body>
 </html>
