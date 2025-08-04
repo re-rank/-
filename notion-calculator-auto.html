@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노션 반려동물 가계부 계산기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .calculator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #fffafb;
+            display: flex;
+            flex-direction: column;
+            padding: 1vmin;
+        }
+
+        .display {
+            background-color: #ffecef;
+            border-radius: 2vmin;
+            padding: 2vmin 3vmin;
+            margin-bottom: 1vmin;
+            text-align: right;
+            flex: 0 0 auto;
+            height: 15vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 0.5vmin 1vmin rgba(241, 241, 246, 0.5);
+        }
+
+        .display-expression {
+            font-size: 2.5vmin;
+            color: #999;
+            margin-bottom: 1vmin;
+            min-height: 2.5vmin;
+            line-height: 1;
+        }
+
+        .display-value {
+            font-size: 5vmin;
+            color: #333;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .buttons {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 1vmin;
+        }
+
+        .btn {
+            background-color: #ffecef;
+            border: none;
+            border-radius: 1.5vmin;
+            font-size: 4vmin;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-weight: 500;
+            box-shadow: 0 0.8vmin 0 #fee1e5, 0 1vmin 1.5vmin rgba(241, 241, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: translateY(0.8vmin);
+            box-shadow: none;
+            background-color: #fee1e5;
+        }
+
+        .btn-number {
+            background-color: white;
+            box-shadow: 0 0.8vmin 0 #e0e0e0, 0 1vmin 1.5vmin rgba(241, 241, 246, 0.3);
+        }
+
+        .btn-number:active {
+            background-color: #f5f5f5;
+            box-shadow: none;
+        }
+
+        .btn-operator {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .btn-clear {
+            color: #ff4757;
+            font-weight: 600;
+        }
+
+        .btn-ce {
+            color: #ff6348;
+            font-weight: 600;
+        }
+
+        .btn-equals {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .btn-backspace {
+            background-color: white;
+            color: #333;
+            font-size: 3.5vmin;
+            box-shadow: 0 0.8vmin 0 #e0e0e0, 0 1vmin 1.5vmin rgba(241, 241, 246, 0.3);
+        }
+
+        .btn-backspace:active {
+            background-color: #f5f5f5;
+            box-shadow: none;
+        }
+
+        /* 가로가 너무 길 때 */
+        @media (aspect-ratio > 2/1) {
+            .calculator {
+                max-width: 200vh;
+                margin: 0 auto;
+            }
+        }
+
+        /* 세로가 너무 길 때 */
+        @media (aspect-ratio < 1/2) {
+            .calculator {
+                max-height: 200vw;
+                margin: auto 0;
+            }
+        }
+
+        /* 매우 작은 화면 */
+        @media (max-width: 250px), (max-height: 300px) {
+            .calculator {
+                padding: 0.5vmin;
+            }
+            
+            .display {
+                height: 12vh;
+                padding: 1vmin 2vmin;
+                border-radius: 1vmin;
+            }
+            
+            .display-expression {
+                font-size: 3vmin;
+            }
+            
+            .display-value {
+                font-size: 6vmin;
+            }
+            
+            .buttons {
+                gap: 0.5vmin;
+            }
+            
+            .btn {
+                font-size: 5vmin;
+                border-radius: 1vmin;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div class="display-expression" id="expression"></div>
+            <div class="display-value" id="display">0</div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-operator" onclick="percentage()">%</button>
+            <button class="btn btn-ce" onclick="clearEntry()">CE</button>
+            <button class="btn btn-clear" onclick="clearDisplay()">C</button>
+            <button class="btn btn-operator" onclick="appendOperator('/')">÷</button>
+
+            <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+            <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+            <button class="btn btn-number" onclick="appendNumber('9')">9</button>
+            <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+
+            <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+            <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+            <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+            <button class="btn btn-operator" onclick="appendOperator('-')">-</button>
+
+            <button class="btn btn-number" onclick="appendNumber('1')">1</button>
+            <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+            <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+            <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+
+            <button class="btn btn-number" onclick="appendDecimal()">.</button>
+            <button class="btn btn-number" onclick="appendNumber('0')">0</button>
+            <button class="btn btn-backspace" onclick="backspace()">⌫</button>
+            <button class="btn btn-equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let currentValue = '0';
+        let previousValue = '';
+        let operator = '';
+        let shouldResetDisplay = false;
+        let expression = '';
+
+        const display = document.getElementById('display');
+        const expressionDisplay = document.getElementById('expression');
+
+        function updateDisplay() {
+            display.textContent = currentValue;
+            expressionDisplay.textContent = expression;
+        }
+
+        function clearDisplay() {
+            currentValue = '0';
+            previousValue = '';
+            operator = '';
+            shouldResetDisplay = false;
+            expression = '';
+            updateDisplay();
+        }
+
+        function clearEntry() {
+            currentValue = '0';
+            shouldResetDisplay = false;
+            updateDisplay();
+        }
+
+        function backspace() {
+            if (currentValue.length > 1) {
+                currentValue = currentValue.slice(0, -1);
+            } else {
+                currentValue = '0';
+            }
+            updateDisplay();
+        }
+
+        function appendNumber(num) {
+            if (shouldResetDisplay) {
+                currentValue = '';
+                shouldResetDisplay = false;
+            }
+
+            if (currentValue === '0') {
+                currentValue = num;
+            } else {
+                currentValue += num;
+            }
+
+            updateDisplay();
+        }
+
+        function appendDecimal() {
+            if (shouldResetDisplay) {
+                currentValue = '0';
+                shouldResetDisplay = false;
+            }
+
+            if (!currentValue.includes('.')) {
+                currentValue += '.';
+                updateDisplay();
+            }
+        }
+
+        function appendOperator(op) {
+            if (operator && !shouldResetDisplay) {
+                calculate();
+            }
+
+            previousValue = currentValue;
+            operator = op;
+            shouldResetDisplay = true;
+
+            const operatorSymbols = {
+                '+': '+',
+                '-': '-',
+                '*': '×',
+                '/': '÷'
+            };
+
+            expression = `${previousValue} ${operatorSymbols[op]}`;
+            updateDisplay();
+        }
+
+        function calculate() {
+            if (!operator || !previousValue) return;
+
+            const prev = parseFloat(previousValue);
+            const current = parseFloat(currentValue);
+            let result;
+
+            switch (operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    result = current !== 0 ? prev / current : 'Error';
+                    break;
+            }
+
+            if (result === 'Error') {
+                currentValue = 'Error';
+            } else {
+                currentValue = result.toString();
+                if (currentValue.includes('.') && currentValue.split('.')[1].length > 8) {
+                    currentValue = parseFloat(currentValue).toFixed(8).toString();
+                    currentValue = parseFloat(currentValue).toString();
+                }
+            }
+
+            expression = '';
+            operator = '';
+            previousValue = '';
+            shouldResetDisplay = true;
+            updateDisplay();
+        }
+
+        function percentage() {
+            currentValue = (parseFloat(currentValue) / 100).toString();
+            updateDisplay();
+        }
+
+        // 키보드 지원
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                appendNumber(e.key);
+            } else if (e.key === '.') {
+                e.preventDefault();
+                appendDecimal();
+            } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+                e.preventDefault();
+                appendOperator(e.key);
+            } else if (e.key === 'Enter' || e.key === '=') {
+                e.preventDefault();
+                calculate();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                clearDisplay();
+            } else if (e.key === 'Delete') {
+                e.preventDefault();
+                clearEntry();
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                backspace();
+            } else if (e.key === '%') {
+                e.preventDefault();
+                percentage();
+            }
+        });
+
+        // 터치 스크롤 방지
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
