@@ -13,21 +13,22 @@
             box-sizing: border-box;
         }
         
-        html, body {
+        html {
             width: 100%;
             height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background-color: #fffafb;
-            overflow: hidden;
         }
 
         body {
-            display: flex;
-            flex-direction: column;
-            padding: 2%;
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #fffafb;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            padding: 1%;
+            gap: 1%;
             position: relative;
+            overflow: hidden;
         }
 
         body::after {
@@ -36,138 +37,128 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 8%;
+            height: 10%;
             background: linear-gradient(to bottom, transparent, #ffebed);
             pointer-events: none;
+            z-index: 10;
         }
 
         .display {
             background-color: #ffecef;
-            padding: 3%;
-            margin-bottom: 2%;
+            padding: 2%;
             text-align: right;
-            border-radius: 3vw 3vw 0 0;
+            border-radius: 2% 2% 0 0;
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
+            gap: 2%;
         }
 
         .result {
-            font-size: 8vw;
+            font-size: 2em;
             font-weight: 700;
             color: #000;
-            margin-bottom: 1%;
-            order: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1;
         }
 
         .operation {
-            font-size: 4vw;
+            font-size: 1em;
             color: #000;
-            order: 2;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.2;
-            min-height: 1.2em;
+            line-height: 1;
+            min-height: 1em;
         }
 
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2%;
-            flex: 1;
+            grid-template-rows: repeat(5, 1fr);
+            gap: 1%;
+            padding-bottom: 5%;
         }
 
         button {
             background-color: #ffecef;
             border: none;
-            border-radius: 3vw;
-            padding: 0;
-            font-size: 4vw;
+            border-radius: 10%;
+            font-size: 1em;
             font-weight: 500;
             color: #000;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0.5vw 0 #fee1e5, 0 0.5vw 1vw rgba(241, 241, 246, 0.3);
+            box-shadow: 0 2px 0 #fee1e5;
             position: relative;
-            top: 0;
         }
 
         .number {
             background-color: #ffffff;
-            box-shadow: 0 0.5vw 0 #f1f1f6, 0 0.5vw 1vw rgba(241, 241, 246, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(0.2vw);
-            box-shadow: 0 0.3vw 0 #fee1e5, 0 0.3vw 0.8vw rgba(241, 241, 246, 0.3);
-        }
-
-        .number:hover {
-            transform: translateY(0.2vw);
-            box-shadow: 0 0.3vw 0 #f1f1f6, 0 0.3vw 0.8vw rgba(241, 241, 246, 0.3);
+            box-shadow: 0 2px 0 #f1f1f6;
         }
 
         button:active {
-            transform: translateY(0.5vw);
-            box-shadow: 0 0 0 #fee1e5, 0 0 0 rgba(241, 241, 246, 0.3);
-        }
-
-        .number:active {
-            transform: translateY(0.5vw);
-            box-shadow: 0 0 0 #f1f1f6, 0 0 0 rgba(241, 241, 246, 0.3);
-        }
-
-        .operator {
-            background-color: #ffecef;
-        }
-
-        .equals {
-            background-color: #ffecef;
-        }
-
-        .clear {
-            background-color: #ffecef;
+            transform: translateY(2px);
+            box-shadow: none;
         }
 
         .backspace {
-            font-size: 3vw;
+            font-size: 0.8em;
         }
         
-        /* 가로가 좁을 때 */
-        @media (max-aspect-ratio: 1/1.5) {
+        /* 작은 화면용 폰트 크기 조정 */
+        @media (max-width: 200px), (max-height: 300px) {
             .result {
-                font-size: 10vw;
+                font-size: 1.5em;
             }
             .operation {
-                font-size: 5vw;
+                font-size: 0.8em;
             }
             button {
-                font-size: 5vw;
-            }
-            .backspace {
-                font-size: 4vw;
+                font-size: 0.8em;
             }
         }
         
-        /* 가로가 넓을 때 */
-        @media (min-aspect-ratio: 2/1) {
+        @media (max-width: 150px), (max-height: 200px) {
+            body {
+                padding: 0.5%;
+                gap: 0.5%;
+            }
+            .display {
+                padding: 1%;
+                gap: 1%;
+            }
+            .buttons {
+                gap: 0.5%;
+            }
             .result {
-                font-size: 6vh;
+                font-size: 1.2em;
             }
             .operation {
-                font-size: 3vh;
+                font-size: 0.7em;
             }
             button {
-                font-size: 3vh;
+                font-size: 0.7em;
+                border-radius: 5%;
+            }
+        }
+        
+        /* 매우 작은 화면 */
+        @media (max-width: 100px), (max-height: 150px) {
+            .result {
+                font-size: 1em;
+            }
+            .operation {
+                font-size: 0.6em;
+            }
+            button {
+                font-size: 0.6em;
             }
             .backspace {
-                font-size: 2.5vh;
+                font-size: 0.5em;
             }
         }
     </style>
@@ -178,30 +169,30 @@
         <div class="operation" id="operation"></div>
     </div>
     <div class="buttons">
-        <button class="function" onclick="percentage()">%</button>
-        <button class="clear" onclick="clearEntry()">CE</button>
-        <button class="clear" onclick="clearAll()">C</button>
-        <button class="operator" onclick="appendOperator('÷')">÷</button>
+        <button onclick="percentage()">%</button>
+        <button onclick="clearEntry()">CE</button>
+        <button onclick="clearAll()">C</button>
+        <button onclick="appendOperator('÷')">÷</button>
         
         <button class="number" onclick="appendNumber('7')">7</button>
         <button class="number" onclick="appendNumber('8')">8</button>
         <button class="number" onclick="appendNumber('9')">9</button>
-        <button class="operator" onclick="appendOperator('×')">×</button>
+        <button onclick="appendOperator('×')">×</button>
         
         <button class="number" onclick="appendNumber('4')">4</button>
         <button class="number" onclick="appendNumber('5')">5</button>
         <button class="number" onclick="appendNumber('6')">6</button>
-        <button class="operator" onclick="appendOperator('-')">−</button>
+        <button onclick="appendOperator('-')">−</button>
         
         <button class="number" onclick="appendNumber('1')">1</button>
         <button class="number" onclick="appendNumber('2')">2</button>
         <button class="number" onclick="appendNumber('3')">3</button>
-        <button class="operator" onclick="appendOperator('+')">+</button>
+        <button onclick="appendOperator('+')">+</button>
         
         <button class="number" onclick="appendNumber('.')">.</button>
         <button class="number" onclick="appendNumber('0')">0</button>
         <button class="backspace" onclick="backspace()">⌫</button>
-        <button class="equals" onclick="calculate()">=</button>
+        <button onclick="calculate()">=</button>
     </div>
 
     <script>
