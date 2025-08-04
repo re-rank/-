@@ -2,130 +2,106 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex, nofollow">
-    <title>계산기 위젯</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>계산기 위젯 v2</title>
     <style>
-        * {
+        html, body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: transparent;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
-        .calculator {
-            width: 320px;
+        #calculator-container {
+            width: 100vw;
+            height: 100vh;
             background-color: #fffafb;
-            border-radius: 20px;
-            padding: 30px 20px 20px 20px;
-            box-shadow: 0 20px 40px rgba(255, 235, 237, 0.8), 0 10px 20px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
             position: relative;
+            transform-origin: top left;
         }
 
-        .calculator::after {
+        #calculator-container::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 50px;
+            height: 10%;
             background: linear-gradient(to bottom, transparent, #ffebed);
-            border-radius: 0 0 20px 20px;
             pointer-events: none;
         }
 
         .display {
             background-color: #ffecef;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 3% 4%;
+            margin: 2%;
+            margin-bottom: 0;
             text-align: right;
-            border-radius: 15px;
+            border-radius: 15px 15px 0 0;
+            flex-shrink: 0;
         }
 
         .result {
             font-size: 48px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .operation {
             font-size: 24px;
             color: #000;
             min-height: 30px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .buttons {
+            flex: 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            grid-template-rows: repeat(5, 1fr);
+            gap: 2%;
+            padding: 2%;
+            padding-bottom: 12%;
         }
 
         button {
             background-color: #ffecef;
             border: none;
             border-radius: 15px;
-            padding: 20px;
             font-size: 24px;
             font-weight: 500;
             color: #000;
             cursor: pointer;
-            transition: all 0.2s ease;
-            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 0 #fee1e5, 0 4px 8px rgba(241, 241, 246, 0.3);
-            position: relative;
-            top: 0;
+            box-shadow: 0 4px 0 #fee1e5;
+            transition: all 0.1s ease;
         }
 
         .number {
             background-color: #ffffff;
-            box-shadow: 0 4px 0 #f1f1f6, 0 4px 8px rgba(241, 241, 246, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(1px);
-            box-shadow: 0 3px 0 #fee1e5, 0 3px 6px rgba(241, 241, 246, 0.3);
-        }
-
-        .number:hover {
-            transform: translateY(1px);
-            box-shadow: 0 3px 0 #f1f1f6, 0 3px 6px rgba(241, 241, 246, 0.3);
+            box-shadow: 0 4px 0 #f1f1f6;
         }
 
         button:active {
             transform: translateY(4px);
-            box-shadow: 0 0 0 #fee1e5, 0 0 0 rgba(241, 241, 246, 0.3);
-        }
-
-        .number:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #f1f1f6, 0 0 0 rgba(241, 241, 246, 0.3);
-        }
-
-        .operator {
-            background-color: #ffecef;
-        }
-
-        .equals {
-            background-color: #ffecef;
-        }
-
-        .clear {
-            background-color: #ffecef;
+            box-shadow: none;
         }
 
         .backspace {
@@ -134,40 +110,41 @@
     </style>
 </head>
 <body>
-    <div class="calculator">
+    <div id="calculator-container">
         <div class="display">
-            <div class="result" id="result">226</div>
-            <div class="operation" id="operation">100+110+116</div>
+            <div class="result" id="result">0</div>
+            <div class="operation" id="operation"></div>
         </div>
         <div class="buttons">
-            <button class="function" onclick="percentage()">%</button>
-            <button class="clear" onclick="clearEntry()">CE</button>
-            <button class="clear" onclick="clearAll()">C</button>
-            <button class="operator" onclick="appendOperator('÷')">÷</button>
+            <button onclick="percentage()">%</button>
+            <button onclick="clearEntry()">CE</button>
+            <button onclick="clearAll()">C</button>
+            <button onclick="appendOperator('÷')">÷</button>
             
             <button class="number" onclick="appendNumber('7')">7</button>
             <button class="number" onclick="appendNumber('8')">8</button>
             <button class="number" onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('×')">×</button>
+            <button onclick="appendOperator('×')">×</button>
             
             <button class="number" onclick="appendNumber('4')">4</button>
             <button class="number" onclick="appendNumber('5')">5</button>
             <button class="number" onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('-')">−</button>
+            <button onclick="appendOperator('-')">−</button>
             
             <button class="number" onclick="appendNumber('1')">1</button>
             <button class="number" onclick="appendNumber('2')">2</button>
             <button class="number" onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
+            <button onclick="appendOperator('+')">+</button>
             
             <button class="number" onclick="appendNumber('.')">.</button>
             <button class="number" onclick="appendNumber('0')">0</button>
             <button class="backspace" onclick="backspace()">⌫</button>
-            <button class="equals" onclick="calculate()">=</button>
+            <button onclick="calculate()">=</button>
         </div>
     </div>
 
     <script>
+        // 계산기 로직
         let currentInput = '';
         let expression = '';
         let result = '0';
@@ -277,6 +254,37 @@
         }
 
         updateDisplay();
+
+        // 동적 스케일링
+        function scaleCalculator() {
+            const container = document.getElementById('calculator-container');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // 기준 크기 (디자인 기준)
+            const baseWidth = 360;
+            const baseHeight = 600;
+            
+            // 스케일 계산
+            const scaleX = windowWidth / baseWidth;
+            const scaleY = windowHeight / baseHeight;
+            const scale = Math.min(scaleX, scaleY);
+            
+            // 스케일 적용
+            container.style.transform = `scale(${scale})`;
+            container.style.width = baseWidth + 'px';
+            container.style.height = baseHeight + 'px';
+        }
+
+        // 초기 실행 및 리사이즈 이벤트
+        window.addEventListener('load', scaleCalculator);
+        window.addEventListener('resize', scaleCalculator);
+        
+        // iframe 내부에서 실행될 때를 위한 추가 처리
+        if (window.parent !== window) {
+            // iframe 크기 변경 감지
+            setInterval(scaleCalculator, 100);
+        }
     </script>
 </body>
 </html>
