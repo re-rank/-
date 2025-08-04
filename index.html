@@ -25,18 +25,32 @@
 
         .calculator {
             width: 320px;
-            background-color: #ffe4e9;
+            background-color: #fffafb;
             border-radius: 20px;
             padding: 30px 20px 20px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(255, 235, 237, 0.8), 0 10px 20px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
+            position: relative;
+        }
+
+        .calculator::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, #ffebed);
+            border-radius: 0 0 20px 20px;
+            pointer-events: none;
         }
 
         .display {
-            background-color: #ffe4e9;
+            background-color: #ffecef;
             padding: 20px;
             margin-bottom: 20px;
             text-align: right;
+            border-radius: 15px;
         }
 
         .result {
@@ -59,7 +73,7 @@
         }
 
         button {
-            background-color: #f8c4d0;
+            background-color: #ffecef;
             border: none;
             border-radius: 15px;
             padding: 20px;
@@ -72,35 +86,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 0 #fee1e5, 0 4px 8px rgba(241, 241, 246, 0.3);
+            position: relative;
+            top: 0;
         }
 
         .number {
             background-color: #ffffff;
+            box-shadow: 0 4px 0 #f1f1f6, 0 4px 8px rgba(241, 241, 246, 0.3);
         }
 
         button:hover {
-            background-color: #f5b3c0;
-            transform: scale(0.98);
+            transform: translateY(1px);
+            box-shadow: 0 3px 0 #fee1e5, 0 3px 6px rgba(241, 241, 246, 0.3);
         }
 
         .number:hover {
-            background-color: #f0f0f0;
+            transform: translateY(1px);
+            box-shadow: 0 3px 0 #f1f1f6, 0 3px 6px rgba(241, 241, 246, 0.3);
         }
 
         button:active {
-            transform: scale(0.95);
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #fee1e5, 0 0 0 rgba(241, 241, 246, 0.3);
+        }
+
+        .number:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #f1f1f6, 0 0 0 rgba(241, 241, 246, 0.3);
         }
 
         .operator {
-            background-color: #f8c4d0;
+            background-color: #ffecef;
         }
 
         .equals {
-            background-color: #f8c4d0;
+            background-color: #ffecef;
         }
 
         .clear {
-            background-color: #f8c4d0;
+            background-color: #ffecef;
         }
 
         .backspace {
