@@ -27,6 +27,15 @@
             overflow: hidden;
         }
 
+        .calculator-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            container-type: size;
+        }
+
         .calculator {
             width: 100%;
             height: 100%;
@@ -37,7 +46,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow: auto;
+            overflow: hidden;
         }
 
         .calculator::after {
@@ -63,7 +72,7 @@
         }
 
         .result {
-            font-size: 5vmin;
+            font-size: calc(100cqw * 0.05);
             font-weight: 700;
             color: #000;
             margin-bottom: 0.5%;
@@ -74,7 +83,7 @@
         }
 
         .operation {
-            font-size: 2.5vmin;
+            font-size: calc(100cqw * 0.025);
             color: #000;
             order: 2;
             overflow: hidden;
@@ -95,7 +104,7 @@
             border: none;
             border-radius: 10%;
             padding: 0;
-            font-size: 2.5vmin;
+            font-size: calc(100cqw * 0.025);
             font-weight: 500;
             color: #000;
             cursor: pointer;
@@ -103,7 +112,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0.3vmin 0 #fee1e5, 0 0.3vmin 0.6vmin rgba(241, 241, 246, 0.3);
+            box-shadow: 0 calc(100cqw * 0.003) 0 #fee1e5, 0 calc(100cqw * 0.003) calc(100cqw * 0.006) rgba(241, 241, 246, 0.3);
             position: relative;
             top: 0;
             aspect-ratio: 1;
@@ -111,26 +120,26 @@
 
         .number {
             background-color: #ffffff;
-            box-shadow: 0 0.3vmin 0 #f1f1f6, 0 0.3vmin 0.6vmin rgba(241, 241, 246, 0.3);
+            box-shadow: 0 calc(100cqw * 0.003) 0 #f1f1f6, 0 calc(100cqw * 0.003) calc(100cqw * 0.006) rgba(241, 241, 246, 0.3);
         }
 
         button:hover {
-            transform: translateY(0.1vmin);
-            box-shadow: 0 0.2vmin 0 #fee1e5, 0 0.2vmin 0.4vmin rgba(241, 241, 246, 0.3);
+            transform: translateY(calc(100cqw * 0.001));
+            box-shadow: 0 calc(100cqw * 0.002) 0 #fee1e5, 0 calc(100cqw * 0.002) calc(100cqw * 0.004) rgba(241, 241, 246, 0.3);
         }
 
         .number:hover {
-            transform: translateY(0.1vmin);
-            box-shadow: 0 0.2vmin 0 #f1f1f6, 0 0.2vmin 0.4vmin rgba(241, 241, 246, 0.3);
+            transform: translateY(calc(100cqw * 0.001));
+            box-shadow: 0 calc(100cqw * 0.002) 0 #f1f1f6, 0 calc(100cqw * 0.002) calc(100cqw * 0.004) rgba(241, 241, 246, 0.3);
         }
 
         button:active {
-            transform: translateY(0.3vmin);
+            transform: translateY(calc(100cqw * 0.003));
             box-shadow: 0 0 0 #fee1e5, 0 0 0 rgba(241, 241, 246, 0.3);
         }
 
         .number:active {
-            transform: translateY(0.3vmin);
+            transform: translateY(calc(100cqw * 0.003));
             box-shadow: 0 0 0 #f1f1f6, 0 0 0 rgba(241, 241, 246, 0.3);
         }
 
@@ -147,24 +156,23 @@
         }
 
         .backspace {
-            font-size: 2vmin;
+            font-size: calc(100cqw * 0.02);
         }
         
-        /* 매우 작은 크기에서도 보이도록 */
-        @media (max-aspect-ratio: 1/1) {
+        /* 컨테이너 크기별 반응형 */
+        @container (max-width: 300px) {
             .result {
-                font-size: 4vw;
+                font-size: calc(100cqw * 0.08);
             }
             .operation {
-                font-size: 2vw;
+                font-size: calc(100cqw * 0.04);
             }
             button {
-                font-size: 2vw;
+                font-size: calc(100cqw * 0.04);
             }
         }
         
-        /* 컨테이너가 매우 작을 때 */
-        @media (max-width: 150px) or (max-height: 150px) {
+        @container (max-width: 200px) {
             .calculator {
                 padding: 1%;
             }
@@ -174,22 +182,56 @@
                 border-radius: 1% 1% 0 0;
             }
             .buttons {
-                gap: 0.5%;
+                gap: 1%;
             }
             button {
                 border-radius: 5%;
-                font-size: 1.8vmin;
+                font-size: calc(100cqw * 0.05);
             }
             .result {
-                font-size: 3vmin;
+                font-size: calc(100cqw * 0.1);
             }
             .operation {
-                font-size: 1.5vmin;
+                font-size: calc(100cqw * 0.05);
             }
         }
         
-        /* 극도로 작은 크기 */
-        @media (max-width: 100px) or (max-height: 100px) {
+        @container (max-width: 150px) {
+            .buttons {
+                gap: 0.5%;
+            }
+            button {
+                font-size: calc(100cqw * 0.06);
+            }
+            .result {
+                font-size: calc(100cqw * 0.12);
+            }
+            .operation {
+                font-size: calc(100cqw * 0.06);
+            }
+            .backspace {
+                font-size: calc(100cqw * 0.05);
+            }
+        }
+        
+        /* 세로가 긴 컨테이너 */
+        @container (max-aspect-ratio: 1/1) {
+            .result {
+                font-size: calc(100cqh * 0.05);
+            }
+            .operation {
+                font-size: calc(100cqh * 0.025);
+            }
+            button {
+                font-size: calc(100cqh * 0.025);
+            }
+            .backspace {
+                font-size: calc(100cqh * 0.02);
+            }
+        }
+        
+        /* 매우 작은 컨테이너 */
+        @container (max-width: 100px) and (max-height: 100px) {
             .calculator {
                 padding: 0.5%;
             }
@@ -202,51 +244,43 @@
             }
             button {
                 border-radius: 3%;
-                font-size: 1.5vmin;
-            }
-            .result {
-                font-size: 2.5vmin;
-            }
-            .operation {
-                font-size: 1.2vmin;
-            }
-            .backspace {
-                font-size: 1.2vmin;
             }
         }
     </style>
 </head>
 <body>
-    <div class="calculator">
-        <div class="display">
-            <div class="result" id="result">226</div>
-            <div class="operation" id="operation">100+110+116</div>
-        </div>
-        <div class="buttons">
-            <button class="function" onclick="percentage()">%</button>
-            <button class="clear" onclick="clearEntry()">CE</button>
-            <button class="clear" onclick="clearAll()">C</button>
-            <button class="operator" onclick="appendOperator('÷')">÷</button>
-            
-            <button class="number" onclick="appendNumber('7')">7</button>
-            <button class="number" onclick="appendNumber('8')">8</button>
-            <button class="number" onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('×')">×</button>
-            
-            <button class="number" onclick="appendNumber('4')">4</button>
-            <button class="number" onclick="appendNumber('5')">5</button>
-            <button class="number" onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('-')">−</button>
-            
-            <button class="number" onclick="appendNumber('1')">1</button>
-            <button class="number" onclick="appendNumber('2')">2</button>
-            <button class="number" onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-            
-            <button class="number" onclick="appendNumber('.')">.</button>
-            <button class="number" onclick="appendNumber('0')">0</button>
-            <button class="backspace" onclick="backspace()">⌫</button>
-            <button class="equals" onclick="calculate()">=</button>
+    <div class="calculator-wrapper">
+        <div class="calculator">
+            <div class="display">
+                <div class="result" id="result">226</div>
+                <div class="operation" id="operation">100+110+116</div>
+            </div>
+            <div class="buttons">
+                <button class="function" onclick="percentage()">%</button>
+                <button class="clear" onclick="clearEntry()">CE</button>
+                <button class="clear" onclick="clearAll()">C</button>
+                <button class="operator" onclick="appendOperator('÷')">÷</button>
+                
+                <button class="number" onclick="appendNumber('7')">7</button>
+                <button class="number" onclick="appendNumber('8')">8</button>
+                <button class="number" onclick="appendNumber('9')">9</button>
+                <button class="operator" onclick="appendOperator('×')">×</button>
+                
+                <button class="number" onclick="appendNumber('4')">4</button>
+                <button class="number" onclick="appendNumber('5')">5</button>
+                <button class="number" onclick="appendNumber('6')">6</button>
+                <button class="operator" onclick="appendOperator('-')">−</button>
+                
+                <button class="number" onclick="appendNumber('1')">1</button>
+                <button class="number" onclick="appendNumber('2')">2</button>
+                <button class="number" onclick="appendNumber('3')">3</button>
+                <button class="operator" onclick="appendOperator('+')">+</button>
+                
+                <button class="number" onclick="appendNumber('.')">.</button>
+                <button class="number" onclick="appendNumber('0')">0</button>
+                <button class="backspace" onclick="backspace()">⌫</button>
+                <button class="equals" onclick="calculate()">=</button>
+            </div>
         </div>
     </div>
 
