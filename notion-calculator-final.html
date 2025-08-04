@@ -345,6 +345,52 @@
             else if (e.key === 'Backspace') del();
             else if (e.key === '%') per();
         });
+
+        // 동적 크기 조절
+        function adjustSize() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            
+            const height = window.innerHeight;
+            const width = window.innerWidth;
+            const calc = document.querySelector('.calc');
+            const screen = document.querySelector('.screen');
+            const val = document.querySelector('.val');
+            const keys = document.querySelectorAll('.key');
+            
+            // 높이에 따른 동적 조절
+            if (height < 400) {
+                calc.style.maxHeight = '100%';
+                screen.style.flex = `0 0 ${height * 0.12}px`;
+                val.style.fontSize = `${height * 0.05}px`;
+                keys.forEach(k => k.style.fontSize = `${height * 0.04}px`);
+            } else if (height < 600) {
+                screen.style.flex = `0 0 ${height * 0.13}px`;
+                val.style.fontSize = `${height * 0.055}px`;
+                keys.forEach(k => k.style.fontSize = `${height * 0.035}px`);
+            } else {
+                screen.style.flex = '0 0 80px';
+                val.style.fontSize = '32px';
+                keys.forEach(k => k.style.fontSize = '20px');
+            }
+            
+            // 너비에 따른 조절
+            if (width < 300) {
+                calc.style.padding = '3px';
+                calc.style.gap = '3px';
+            }
+        }
+
+        // 초기 실행 및 리사이즈 이벤트
+        adjustSize();
+        window.addEventListener('resize', adjustSize);
+        window.addEventListener('orientationchange', adjustSize);
+        
+        // iframe 내부 로드 감지
+        if (window.self !== window.top) {
+            setTimeout(adjustSize, 100);
+            setTimeout(adjustSize, 500);
+        }
     </script>
 </body>
 </html>
