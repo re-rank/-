@@ -21,32 +21,45 @@
             height: 100%;
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', sans-serif;
             background-color: #fffafb;
+            display: flex;
+            align-items: stretch;
         }
 
-        .calculator {
+        #calculator-container {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
             flex-direction: column;
             background-color: #fffafb;
             padding: 1.5%;
-            border-radius: 28px;
-            container-type: size;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
 
         .display {
             background-color: #ffecef;
-            border-radius: 16px 16px 0 0;
-            padding: 4% 6%;
+            padding: min(4%, 20px) min(6%, 30px);
             margin-bottom: 0;
             text-align: right;
             border-radius: min(15px, 3vw) min(15px, 3vw) 0 0;
             flex-shrink: 0;
+            min-height: min(20%, 100px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .result {
@@ -73,9 +86,10 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 2vw;
-            padding: 2vw;
-            padding-bottom: 4vh;
+            gap: min(2vw, 10px);
+            padding: min(2vw, 10px);
+            padding-bottom: min(4vh, 20px);
+            min-height: 0;
         }
 
         button {
