@@ -38,18 +38,18 @@
         }
 
         #calculator-container {
-            width: calc(100% - 48px);
-            height: calc(100% - 48px);
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             background-color: #ffffff;
             padding: 24px;
-            margin: 24px;
             border-radius: 28px;
             max-width: 632px;
             max-height: 996px;
             margin: auto;
             position: relative;
+            box-sizing: border-box;
         }
 
         .display {
@@ -58,18 +58,18 @@
             padding-bottom: 56px;
             margin-bottom: 0;
             text-align: right;
-            flex-shrink: 0;
-            height: 336px;
+            flex: 0 0 336px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
             border-radius: 28px 28px 0 0;
+            min-height: 0;
         }
 
         .result {
-            font-size: 112px;
-            line-height: 112px;
+            font-size: clamp(60px, 10vw, 112px);
+            line-height: 1;
             font-weight: 600;
             color: #161616;
             overflow: hidden;
@@ -80,11 +80,10 @@
         }
 
         .operation {
-            font-size: 49px;
+            font-size: clamp(24px, 4.5vw, 49px);
             font-weight: 400;
             color: #161616;
-            height: 49px;
-            line-height: 49px;
+            line-height: 1.2;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -111,8 +110,8 @@
             background-color: #FFEDEE;
             border: none;
             border-radius: 10px;
-            font-size: 50px;
-            font-weight: 500;
+            font-size: 40px;
+            font-weight: 700;
             color: black;
             cursor: pointer;
             display: flex;
@@ -125,6 +124,7 @@
             height: 100%;
             position: relative;
             transform: translateY(-4px);
+            aspect-ratio: 128 / 104;
         }
 
         .number {
@@ -147,35 +147,35 @@
 
         /* Special button styles */
         .multiply {
-            font-size: 60px;
+            font-size: 48px;
         }
         
         .plus {
-            font-size: 70px;
+            font-size: 56px;
         }
         
         .divide {
-            font-size: 50px;
-        }
-        
-        .minus {
-            font-size: 50px;
-        }
-        
-        .percent, .ce, .c {
-            font-size: 50px;
-        }
-
-        .backspace {
             font-size: 40px;
         }
         
+        .minus {
+            font-size: 40px;
+        }
+        
+        .percent, .ce, .c {
+            font-size: 40px;
+        }
+
+        .backspace {
+            font-size: 32px;
+        }
+        
         .equals {
-            font-size: 50px;
+            font-size: 40px;
         }
         
         .dot {
-            font-size: 24px;
+            font-size: 20px;
             padding-bottom: 10px;
         }
     </style>
