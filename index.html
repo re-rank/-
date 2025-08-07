@@ -93,13 +93,12 @@
         .buttons {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(4, 128px);
-            grid-template-rows: repeat(5, 104px);
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
             gap: 24px;
             padding: 24px;
             padding-top: 48px;
             padding-bottom: 34px;
-            justify-content: center;
             min-height: 0;
             background-color: #FFFAFB;
             border-radius: 0 0 28px 28px;
@@ -117,19 +116,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 0 #FDE1E5;
+            box-shadow: 0 4px 0 #FDE1E5;
             transition: all 0.1s ease;
             padding: 0;
             width: 128px;
             height: 104px;
             position: relative;
-            transform: translateY(-6px);
+            transform: translateY(-4px);
         }
 
         .number {
             background-color: white;
             color: black;
-            box-shadow: 0 6px 0 #EFF1F5;
+            box-shadow: 0 4px 0 #EFF1F5;
         }
 
         .number:active {
