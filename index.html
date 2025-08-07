@@ -52,11 +52,12 @@
         .display {
             background-color: #ffecef;
             padding: min(4%, 20px) min(6%, 30px);
+            padding-bottom: 55px;
             margin-bottom: 0;
             text-align: right;
             border-radius: min(15px, 3vw) min(15px, 3vw) 0 0;
             flex-shrink: 0;
-            min-height: min(20%, 100px);
+            height: 336px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -65,7 +66,7 @@
         .result {
             font-size: clamp(50px, 8vw, 50px);
             font-weight: 700;
-            color: #fccaeb;
+            color: #000;
             margin-bottom: 0.5vh;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -87,7 +88,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: min(2vw, 10px);
+            gap: max(24px, calc(24px + (100vw - 800px) / 100 * 3));
             padding: min(2vw, 10px);
             padding-bottom: min(4vh, 20px);
             min-height: 0;
