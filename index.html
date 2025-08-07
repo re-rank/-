@@ -100,7 +100,18 @@
             background-color: #FFFAFB;
             position: relative;
             border-radius: 0 0 20px 20px;
-            box-shadow: 0 18px 0 #ffebed;
+        }
+        
+        .buttons::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 0;
+            right: 0;
+            height: 18px;
+            background-color: #ffebed;
+            border-radius: 0 0 20px 20px;
+            z-index: -1;
         }
 
         button {
