@@ -41,7 +41,7 @@
             display: flex;
             flex-direction: column;
             background-color: #ffffff;
-            padding: 1.5%;
+            padding: 24px;
             position: absolute;
             top: 0;
             left: 0;
@@ -52,7 +52,7 @@
         .display {
             background-color: #ffecef;
             padding: min(4%, 20px) min(6%, 30px);
-            padding-bottom: 55px;
+            padding-bottom: 56px;
             margin-bottom: 0;
             text-align: right;
             border-radius: min(15px, 3vw) min(15px, 3vw) 0 0;
@@ -60,14 +60,14 @@
             height: 336px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         .result {
-            font-size: clamp(50px, 8vw, 50px);
+            font-size: 112px;
+            line-height: 112px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 0.5vh;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -75,9 +75,10 @@
 
         .operation {
             font-size: clamp(16px, 4vw, 24px);
-            font-weight: 700;
+            font-weight: 400;
             color: #000;
-            min-height: clamp(20px, 4vh, 30px);
+            height: 49px;
+            line-height: 49px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -86,14 +87,16 @@
         .buttons {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: max(24px, calc(24px + (100vw - 800px) / 100 * 3));
-            padding: min(2vw, 10px);
-            padding-bottom: min(4vh, 20px);
+            grid-template-columns: repeat(4, 128px);
+            grid-template-rows: repeat(5, 104px);
+            gap: 24px;
+            padding: 24px;
+            padding-top: 40px;
+            padding-bottom: 34px;
+            justify-content: center;
             min-height: 0;
             background-color: #fffafb;
-            box-shadow: 0 4px 0 #ffebed;
+            box-shadow: 0 18px 0 #ffebed;
             border-radius: 0 0 min(15px, 3vw) min(15px, 3vw);
         }
 
@@ -101,7 +104,7 @@
             background-color: #FFEDEE;
             border: none;
             border-radius: min(15px, 3vw);
-            font-size: clamp(16px, 4vw, 24px);
+            font-size: 24px;
             font-weight: 700;
             color: #000;
             cursor: pointer;
@@ -111,13 +114,22 @@
             box-shadow: 0 min(4px, 0.8vw) 0 #fee1e5;
             transition: all 0.1s ease;
             padding: 0;
-            min-height: 30px;
+            width: 128px;
+            height: 104px;
         }
 
         .number {
             background-color: #ffffff;
             color: #000;
             box-shadow: 0 min(4px, 0.8vw) 0 #f1f1f6;
+        }
+
+        .number:active {
+            background-color: #F5F5F5;
+        }
+
+        .operator:active {
+            background-color: #FFE3E5;
         }
 
         button:active {
@@ -137,30 +149,30 @@
             <div class="operation" id="operation"></div>
         </div>
         <div class="buttons">
-            <button onclick="percentage()">%</button>
-            <button onclick="clearEntry()">CE</button>
-            <button onclick="clearAll()">C</button>
-            <button onclick="appendOperator('÷')">÷</button>
+            <button class="operator" onclick="percentage()">%</button>
+            <button class="operator" onclick="clearEntry()">CE</button>
+            <button class="operator" onclick="clearAll()">C</button>
+            <button class="operator" onclick="appendOperator('÷')">÷</button>
             
             <button class="number" onclick="appendNumber('7')">7</button>
             <button class="number" onclick="appendNumber('8')">8</button>
             <button class="number" onclick="appendNumber('9')">9</button>
-            <button onclick="appendOperator('×')">×</button>
+            <button class="operator" onclick="appendOperator('×')">×</button>
             
             <button class="number" onclick="appendNumber('4')">4</button>
             <button class="number" onclick="appendNumber('5')">5</button>
             <button class="number" onclick="appendNumber('6')">6</button>
-            <button onclick="appendOperator('-')">−</button>
+            <button class="operator" onclick="appendOperator('-')">−</button>
             
             <button class="number" onclick="appendNumber('1')">1</button>
             <button class="number" onclick="appendNumber('2')">2</button>
             <button class="number" onclick="appendNumber('3')">3</button>
-            <button onclick="appendOperator('+')">+</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
             
             <button class="number" onclick="appendNumber('.')">.</button>
             <button class="number" onclick="appendNumber('0')">0</button>
-            <button class="backspace" onclick="backspace()">⌫</button>
-            <button onclick="calculate()">=</button>
+            <button class="operator backspace" onclick="backspace()">⌫</button>
+            <button class="operator" onclick="calculate()">=</button>
         </div>
     </div>
 
