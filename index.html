@@ -51,39 +51,42 @@
         }
 
         .display {
-            background-color: #FFFAFB;
+            background-color: #FEECEF;
             padding: 0 3%;
             padding-bottom: 5%;
             margin-bottom: 0;
             text-align: right;
             flex-shrink: 0;
-            height: 28%;
+            height: 336px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
+            border-radius: min(28px, 4vw) min(28px, 4vw) 0 0;
         }
 
         .result {
-            font-size: clamp(40px, 11vw, 110px);
+            font-size: clamp(60px, 11vw, 110px);
             line-height: 1.1;
             font-weight: 600;
             color: #161616;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            margin-bottom: 2%;
+            margin-bottom: 24px;
+            text-align: right;
         }
 
         .operation {
-            font-size: clamp(20px, 5.7vw, 57px);
+            font-size: clamp(24px, 5.7vw, 57px);
             font-weight: 400;
             color: #161616;
-            height: auto;
-            line-height: 1.05;
+            height: 60px;
+            line-height: 60px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-align: right;
         }
 
         .buttons {
@@ -91,37 +94,38 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 3%;
-            padding: 3%;
-            padding-top: 8%;
+            gap: min(24px, 3%);
+            padding: min(24px, 3%);
+            padding-top: min(80px, 8%);
             min-height: 0;
             background-color: #FFFAFB;
+            border-radius: 0 0 min(28px, 4vw) min(28px, 4vw);
         }
 
         button {
             background-color: #FFEDEE;
             border: none;
-            border-radius: min(10px, 1.5vw);
-            font-size: clamp(20px, 5vw, 50px);
+            border-radius: 10px;
+            font-size: clamp(30px, 5vw, 50px);
             font-weight: 500;
             color: black;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 min(24px, 2.4vw) 0 #FDE1E5;
+            box-shadow: 0 min(24px, 2.4vh) 0 #FDE1E5;
             transition: all 0.1s ease;
             padding: 0;
             width: 100%;
             height: 100%;
             position: relative;
-            transform: translateY(min(-24px, -2.4vw));
+            transform: translateY(min(-24px, -2.4vh));
         }
 
         .number {
             background-color: white;
             color: black;
-            box-shadow: 0 min(24px, 2.4vw) 0 #EFF1F5;
+            box-shadow: 0 min(24px, 2.4vh) 0 #EFF1F5;
         }
 
         .number:active {
@@ -143,27 +147,36 @@
 
         /* Special button styles */
         .multiply {
-            font-size: clamp(24px, 6vw, 60px);
+            font-size: clamp(36px, 6vw, 60px);
         }
         
         .plus {
-            font-size: clamp(28px, 7vw, 70px);
+            font-size: clamp(42px, 7vw, 70px);
         }
         
         .divide {
-            font-size: clamp(20px, 5vw, 50px);
+            font-size: clamp(30px, 5vw, 50px);
         }
         
         .minus {
-            font-size: clamp(20px, 5vw, 50px);
+            font-size: clamp(30px, 5vw, 50px);
+        }
+        
+        .percent, .ce, .c {
+            font-size: clamp(30px, 5vw, 50px);
         }
 
         .backspace {
-            font-size: clamp(16px, 4vw, 40px);
+            font-size: clamp(20px, 4vw, 40px);
         }
         
         .equals {
-            font-size: clamp(20px, 5vw, 50px);
+            font-size: clamp(30px, 5vw, 50px);
+        }
+        
+        .dot {
+            font-size: clamp(16px, 3vw, 24px);
+            padding-bottom: 10px;
         }
     </style>
 </head>
@@ -174,9 +187,9 @@
             <div class="operation" id="operation"></div>
         </div>
         <div class="buttons">
-            <button class="operator" onclick="percentage()">%</button>
-            <button class="operator" onclick="clearEntry()">CE</button>
-            <button class="operator" onclick="clearAll()">C</button>
+            <button class="operator percent" onclick="percentage()">%</button>
+            <button class="operator ce" onclick="clearEntry()">CE</button>
+            <button class="operator c" onclick="clearAll()">C</button>
             <button class="operator divide" onclick="appendOperator('÷')">÷</button>
             
             <button class="number" onclick="appendNumber('7')">7</button>
@@ -194,9 +207,9 @@
             <button class="number" onclick="appendNumber('3')">3</button>
             <button class="operator plus" onclick="appendOperator('+')">+</button>
             
-            <button class="number" onclick="appendNumber('.')">.</button>
+            <button class="number dot" onclick="appendNumber('.')">•</button>
             <button class="number" onclick="appendNumber('0')">0</button>
-            <button class="operator backspace" onclick="backspace()">⌫</button>
+            <button class="operator backspace" onclick="backspace()">←</button>
             <button class="operator equals" onclick="calculate()">=</button>
         </div>
     </div>
